@@ -19,7 +19,7 @@
       class="text-caption text-disabled"
       style="position: absolute; right: 16px;"
     >
-      &copy; 2016-{{ (new Date()).getFullYear() }} <span class="d-none d-sm-inline-block">Vuetify, LLC</span>
+      &copy; {{ (new Date()).getFullYear() }} <span class="d-none d-sm-inline-block">WorkSpectation, Goa</span>
       —
       <a
         class="text-decoration-none on-surface"
@@ -47,8 +47,18 @@
     },
     {
       title: 'ChatGPT',
-      icon: 'mdi-link',
+      icon: 'mdi-chat',
       href: 'https://chatgpt.com/',
+    },
+    {
+      title: 'PocketBase',
+      icon: 'mdi-database',
+      href: 'https://pocketbase.io/',
+    },
+    {
+      title: 'JSONPlaceholder',
+      icon: 'mdi-code-json',
+      href: 'https://jsonplaceholder.typicode.com/',
     },
   ]
 </script>
