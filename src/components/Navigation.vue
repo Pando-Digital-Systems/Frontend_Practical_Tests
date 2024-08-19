@@ -13,7 +13,11 @@
         </template>
 
         <v-divider></v-divider>
-        <v-list-item prepend-icon="mdi-account" title="Authentication" value="home"></v-list-item>
+        <v-list-item 
+            prepend-icon="mdi-home" 
+            title="Dashboard" 
+            :to="{ name: 'dashboard' }"
+        ></v-list-item>
         <v-list density="compact" nav>
         <v-list-item 
             prepend-icon="mdi-clipboard-file" 
