@@ -11,20 +11,20 @@ import { setupLayouts } from 'virtual:generated-layouts'
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/dashboard'
   },  
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('../components/Login.vue'),   
-    meta: { 
-      requiresAuth: true
-    }
-  }, 
   {
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../pages/dashboard.vue'),   
+    meta: { 
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/csv',
+    name: 'csv',
+    component: () => import('../pages/csv.vue'),   
     meta: { 
       requiresAuth: true
     }
@@ -37,22 +37,6 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: '/teams',
-    name: 'teams',
-    component: () => import('../pages/teams.vue'),   
-    meta: { 
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/notifications',
-    name: 'notifications',
-    component: () => import('../pages/notifications.vue'),   
-    meta: { 
-      requiresAuth: true
-    }
-  }
 ]
 
 const router = createRouter({

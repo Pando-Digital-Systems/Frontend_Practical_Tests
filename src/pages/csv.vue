@@ -4,7 +4,7 @@
         <Navigation />
 
         <v-main style="height: 650px">
-            TEAMS CRUD
+            CSV UPLOAD FORM
         </v-main>
       </v-layout>
     </v-card>
