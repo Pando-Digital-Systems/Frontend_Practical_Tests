@@ -29,30 +29,6 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: '/products',
-    name: 'products',
-    component: () => import('../pages/products.vue'),   
-    meta: { 
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/teams',
-    name: 'teams',
-    component: () => import('../pages/teams.vue'),   
-    meta: { 
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/notifications',
-    name: 'notifications',
-    component: () => import('../pages/notifications.vue'),   
-    meta: { 
-      requiresAuth: true
-    }
-  }
 ]
 
 const router = createRouter({
