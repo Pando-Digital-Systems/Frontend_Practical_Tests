@@ -10,6 +10,6 @@
   </template>
   
   <script setup>
-    //
+  import UserDashboard from '@/components/UserDashboard.vue';
   </script>
   
