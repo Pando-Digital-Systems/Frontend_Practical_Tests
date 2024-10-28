@@ -4,6 +4,7 @@ import axios from "axios";
 
 
 const API_BASE_URL = "https://jsonplaceholder.typicode.com";  
+const PHOTOS_ENDPOINT = (id) => `https://randomuser.me/api/portraits/women/${id}.jpg`; // Endpoint for user photos
 
 
 // Fetching list of users.
@@ -24,5 +25,10 @@ export const fetchUserPhotos = async (userId) => {
   } catch (error) {
     throw error;
   }
+};
+
+// Get user photo URL based on user_id
+export const getPhotoUrl = (userId) => {
+  return PHOTOS_ENDPOINT(userId); // Returns the URL for the user photo
 };
 

@@ -6,6 +6,7 @@
 
 // Plugins
 import { registerPlugins } from '@/plugins'
+import { createVuetify } from 'vuetify'; 
 
 // Components
 import App from './App.vue'

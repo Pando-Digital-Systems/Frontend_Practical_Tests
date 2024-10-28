@@ -1,14 +1,12 @@
 <template>
   <v-container class="my-5">
-    <ListViewToggle @update:viewType="updateViewType" />
-
-    <!-- Search Bar -->
     <v-text-field
       v-model="searchQuery"
-      placeholder="Search Users"
+      label="Search by Name or Company"
       prepend-icon="mdi-magnify"
-      class="mb-4"
-    />
+      class="mx-auto mb-4"
+      style="width: 400px;"
+    ></v-text-field>
 
     <v-alert v-if="error" type="error" dismissible>
       Failed to load user data. Please try again.
@@ -16,7 +14,7 @@
 
     <v-progress-circular v-if="loading" indeterminate color="primary"></v-progress-circular>
 
-    <v-row v-if="!loading && !error && viewType === 'grid'">
+    <v-row v-if="!loading && !error && viewType === 'grid'" class="overflow-auto" style="max-height: 600px;">
       <v-col v-for="user in filteredUsers" :key="user.id" cols="12" md="4" class="mb-4">
         <v-card @click="openUserDialog(user)" class="user-card">
           <v-card-title>{{ user.name }}</v-card-title>
@@ -42,26 +40,30 @@
       </v-list-item-group>
     </v-list>
 
-    <UserDialog v-if="selectedUser" :user="selectedUser" :dialog="dialog" @close="dialog = false" />
+    <UserDialog v-if="dialog" :user="selectedUser" :dialog="dialog" @close="dialog = false" />
   </v-container>
 </template>
 
 <script>
 import { ref, computed, onMounted } from 'vue';
 import { fetchUsers, getPhotoUrl } from '@/services/dashboard-service.js';
-import ListViewToggle from './ListViewToggle.vue';
 import UserDialog from './UserDialog.vue';
 
 export default {
-  components: { ListViewToggle, UserDialog },
-  setup() {
+  props: {
+    viewType: {
+      type: String,
+      default: 'grid', // Default view type
+    },
+  },
+  components: { UserDialog },
+  setup(props) {
     const users = ref([]);
     const loading = ref(false);
     const error = ref(null);
     const searchQuery = ref('');
     const dialog = ref(false);
     const selectedUser = ref(null);
-    const viewType = ref('grid'); // Default view type
 
     const filteredUsers = computed(() =>
       users.value.filter(user =>
@@ -86,10 +88,6 @@ export default {
       dialog.value = true;
     };
 
-    const updateViewType = (newViewType) => {
-      viewType.value = newViewType; // Update view type based on toggle
-    };
-
     onMounted(fetchUserData);
 
     return {
@@ -102,8 +100,6 @@ export default {
       selectedUser,
       openUserDialog,
       getPhotoUrl,
-      viewType,
-      updateViewType,
     };
   },
 };
@@ -116,11 +112,5 @@ export default {
 }
 .user-card:hover {
   transform: scale(1.02);
-}
-
-/*  scrolling if content overflows */
-.v-container {
-  overflow-y: auto;
-  max-height: 80vh; /* height adjustment */
 }
 </style>
