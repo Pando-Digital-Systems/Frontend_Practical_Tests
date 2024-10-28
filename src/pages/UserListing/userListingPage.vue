@@ -3,6 +3,7 @@ import { ref } from "vue";
 import api from "@/services/api";
 const search = ref(null);
 const isDescriptionModalOpen = ref(false);
+const dialogTab = ref("contact");
 const dialogIndex = ref(null);
 const showDescriptionDialog = (index) => {
   dialogIndex.value = index;
@@ -27,7 +28,7 @@ await fetchUsers();
 <template>
   <main class="mt-10">
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title>User Directory {{ search }}</v-toolbar-title>
+      <v-toolbar-title>User Directory</v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- Search Field -->
       <v-text-field
@@ -70,31 +71,87 @@ await fetchUsers();
       </v-col>
     </v-row>
     <v-dialog v-model="isDescriptionModalOpen" width="1024">
-      <v-card class="mx-auto" subtitle="user.username" title="user.name">
-        <template v-slot:prepend>
-          <!-- <v-icon color="primary" icon="mdi-account"></v-icon> -->
-          <img
-            :src="`https://randomuser.me/api/portraits/women/${usersList[dialogIndex].id}.jpg`"
-            height="50px"
-            width="50px"
-            class="rounded-xl"
-          />
-        </template>
+      <v-card>
+        <v-tabs v-model="dialogTab" bg-color="primary">
+          <v-tab value="contact">Contact Info</v-tab>
+          <v-tab value="company">Company</v-tab>
+          <v-tab value="address">Address</v-tab>
+        </v-tabs>
+
         <v-card-text>
-          <v-chip color="green" label>
-            {{ usersList[dialogIndex].address.street }},
-            {{ usersList[dialogIndex].address.suite }},
-            {{ usersList[dialogIndex].address.city }},
-            {{ usersList[dialogIndex].address.zipcode }}
-          </v-chip>
-          <br />
-          email: {{ usersList[dialogIndex].email }}
-          <br />
-          phone: {{ usersList[dialogIndex].phone }}
-          <br />
-          company: {{ usersList[dialogIndex].company.name }},
-          {{ usersList[dialogIndex].company.catchPhrase }},
-          {{ usersList[dialogIndex].company.bs }}
+          <v-tabs-window v-model="dialogTab">
+            <v-tabs-window-item value="contact">
+              <v-card
+                class="mx-auto"
+                :subtitle="usersList[dialogIndex].username"
+                :title="usersList[dialogIndex].name"
+              >
+                <template v-slot:prepend>
+                  <!-- <v-icon color="primary" icon="mdi-account"></v-icon> -->
+                  <img
+                    :src="`https://randomuser.me/api/portraits/women/${usersList[dialogIndex].id}.jpg`"
+                    height="50px"
+                    width="50px"
+                    class="rounded-xl"
+                  />
+                </template>
+                <v-card-text>
+                  email: {{ usersList[dialogIndex].email }}
+                  <br />
+                  phone: {{ usersList[dialogIndex].phone }}
+                </v-card-text>
+              </v-card>
+            </v-tabs-window-item>
+
+            <v-tabs-window-item value="company">
+              <v-card
+                class="mx-auto"
+                :subtitle="usersList[dialogIndex].username"
+                :title="usersList[dialogIndex].name"
+              >
+                <template v-slot:prepend>
+                  <!-- <v-icon color="primary" icon="mdi-account"></v-icon> -->
+                  <img
+                    :src="`https://randomuser.me/api/portraits/women/${usersList[dialogIndex].id}.jpg`"
+                    height="50px"
+                    width="50px"
+                    class="rounded-xl"
+                  />
+                </template>
+                <v-card-text>
+                  company: {{ usersList[dialogIndex].company.name }},
+                  {{ usersList[dialogIndex].company.catchPhrase }},
+                  {{ usersList[dialogIndex].company.bs }}
+                </v-card-text>
+              </v-card>
+            </v-tabs-window-item>
+
+            <v-tabs-window-item value="address">
+              <v-card
+                class="mx-auto"
+                :subtitle="usersList[dialogIndex].username"
+                :title="usersList[dialogIndex].name"
+              >
+                <template v-slot:prepend>
+                  <!-- <v-icon color="primary" icon="mdi-account"></v-icon> -->
+                  <img
+                    :src="`https://randomuser.me/api/portraits/women/${usersList[dialogIndex].id}.jpg`"
+                    height="50px"
+                    width="50px"
+                    class="rounded-xl"
+                  />
+                </template>
+                <v-card-text>
+                  <v-chip color="green" label>
+                    {{ usersList[dialogIndex].address.street }},
+                    {{ usersList[dialogIndex].address.suite }},
+                    {{ usersList[dialogIndex].address.city }},
+                    {{ usersList[dialogIndex].address.zipcode }}
+                  </v-chip>
+                </v-card-text>
+              </v-card>
+            </v-tabs-window-item>
+          </v-tabs-window>
         </v-card-text>
       </v-card>
     </v-dialog>
