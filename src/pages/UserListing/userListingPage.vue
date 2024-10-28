@@ -34,7 +34,7 @@ await fetchUsers();
       <!-- Search Field -->
       <v-text-field
         v-model="search"
-        placeholder="Search by name or company"
+        placeholder="Search by name"
         prepend-inner-icon="mdi-magnify"
         outlined
         dense
@@ -48,7 +48,6 @@ await fetchUsers();
         v-model="isCardView"
         :label="isCardView ? 'Card View' : 'List View'"
       ></v-switch>
-
       <!-- Conditional Rendering for Card or List -->
       <div v-if="isCardView">
         <!-- Card View -->
