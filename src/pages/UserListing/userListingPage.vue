@@ -4,6 +4,7 @@ import api from "@/services/api";
 const search = ref(null);
 const isDescriptionModalOpen = ref(false);
 const dialogTab = ref("contact");
+const isCardView = ref(true);
 const dialogIndex = ref(null);
 const showDescriptionDialog = (index) => {
   dialogIndex.value = index;
@@ -41,35 +42,64 @@ await fetchUsers();
         @input="searchUser"
       ></v-text-field>
     </v-app-bar>
-    <v-row align="center" dense>
-      <v-col cols="12" md="4" v-for="(user, index) in searchedUserList">
-        <v-card
-          class="mx-auto"
-          :subtitle="user.username"
-          :title="user.name"
-          @click="showDescriptionDialog(index)"
-        >
-          <template v-slot:prepend>
-            <!-- <v-icon color="primary" icon="mdi-account"></v-icon> -->
-            <img
-              :src="`https://randomuser.me/api/portraits/women/${user.id}.jpg`"
-              height="50px"
-              width="50px"
-              class="rounded-xl"
-            />
-          </template>
-          <v-card-text>
-            <v-chip color="green" label> {{ user.address.city }} </v-chip>
-            <br />
-            email: {{ user.email }}
-            <br />
-            phone: {{ user.phone }}
-            <br />
-            company: {{ user.company.name }}
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+    <v-container>
+      <!-- Toggle Switch -->
+      <v-switch
+        v-model="isCardView"
+        :label="isCardView ? 'Card View' : 'List View'"
+      ></v-switch>
+
+      <!-- Conditional Rendering for Card or List -->
+      <div v-if="isCardView">
+        <!-- Card View -->
+        <v-row align="center" dense>
+          <v-col cols="12" md="4" v-for="(user, index) in searchedUserList">
+            <v-card
+              class="mx-auto"
+              :subtitle="user.username"
+              :title="user.name"
+              @click="showDescriptionDialog(index)"
+            >
+              <template v-slot:prepend>
+                <!-- <v-icon color="primary" icon="mdi-account"></v-icon> -->
+                <img
+                  :src="`https://randomuser.me/api/portraits/women/${user.id}.jpg`"
+                  height="50px"
+                  width="50px"
+                  class="rounded-xl"
+                />
+              </template>
+              <v-card-text>
+                <v-chip color="green" label> {{ user.address.city }} </v-chip>
+                <br />
+                email: {{ user.email }}
+                <br />
+                phone: {{ user.phone }}
+                <br />
+                company: {{ user.company.name }}
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+
+      <div v-else>
+        <!-- List View -->
+        <v-list>
+          <v-list-item
+            v-for="(user, index) in searchedUserList"
+            :key="user.id"
+            @click="showDescriptionDialog(index)"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{ user.name }}</v-list-item-title>
+              <v-list-item-subtitle>{{ user.username }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </div>
+    </v-container>
+
     <v-dialog v-model="isDescriptionModalOpen" width="1024">
       <v-card>
         <v-tabs v-model="dialogTab" bg-color="primary">
