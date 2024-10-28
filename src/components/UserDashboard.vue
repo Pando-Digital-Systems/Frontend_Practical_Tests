@@ -133,4 +133,8 @@ export default {
   overflow-y: auto;
   max-height: 80vh; /* Height adjustment*/
 }
+
+.v-avatar.v-avatar--size-default {
+    --v-avatar-height: 100px !important;
+}
 </style>
