@@ -78,7 +78,8 @@ await fetchUsers();
               cy="25"
               r="20"
               fill="none"
-              stroke-width="5"
+              stroke-width="4"
+              stroke="#3f51b5"
             ></circle>
           </svg>
         </div>
@@ -128,7 +129,8 @@ await fetchUsers();
               cy="25"
               r="20"
               fill="none"
-              stroke-width="5"
+              stroke-width="4"
+              stroke="#3f51b5"
             ></circle>
           </svg>
         </div>
