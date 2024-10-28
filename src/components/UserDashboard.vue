@@ -19,10 +19,20 @@
     <v-row v-if="!loading && !error && viewType === 'grid'">
       <v-col v-for="user in filteredUsers" :key="user.id" cols="12" md="4" class="mb-4">
         <v-card @click="openUserDialog(user)" class="user-card">
-          <v-card-title>{{ user.name }}</v-card-title>
-          <v-card-subtitle>{{ user.email }}</v-card-subtitle>
+          <v-card-title>
+            <v-avatar>
+              <img :src="getPhotoUrl(user.id)" alt="User Photo" />
+            </v-avatar>
+            <span class="ml-2">{{ user.name }}</span>
+          </v-card-title>
+          <v-card-subtitle>
+            <strong>Username:</strong> {{ user.username }}<br />
+            <strong>Email:</strong> {{ user.email }}<br />
+            <strong>Phone:</strong> {{ user.phone }}<br />
+          </v-card-subtitle>
           <v-card-text>
-            <img :src="getPhotoUrl(user.id)" alt="User Photo" width="100%" />
+            <v-chip>{{ user.address.city }}</v-chip>
+            <span>{{ user.company.name }}</span>
           </v-card-text>
         </v-card>
       </v-col>
@@ -118,9 +128,9 @@ export default {
   transform: scale(1.02);
 }
 
-/*  scrolling if content overflows */
+/* scrolling if content overflows */
 .v-container {
   overflow-y: auto;
-  max-height: 80vh; /* height adjustment */
+  max-height: 80vh; /* Height adjustment*/
 }
 </style>
