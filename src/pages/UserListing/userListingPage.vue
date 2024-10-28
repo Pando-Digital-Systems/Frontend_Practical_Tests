@@ -5,6 +5,7 @@ const search = ref(null);
 const isDescriptionModalOpen = ref(false);
 const dialogTab = ref("contact");
 const isCardView = ref(true);
+const isDataLoading = ref(false);
 const dialogIndex = ref(null);
 const error = ref(null);
 const showDescriptionDialog = (index) => {
@@ -14,15 +15,18 @@ const showDescriptionDialog = (index) => {
 const searchedUserList = ref(null);
 const usersList = ref([]);
 const fetchUsers = async () => {
+  isDataLoading.value = false;
   await api
     .get("/users")
     .then((res) => {
       console.log(res.data);
       usersList.value = res.data;
       searchedUserList.value = usersList.value;
+      isDataLoading.value = false;
     })
     .catch((err) => {
       error.value = err.data.message;
+      isDataLoading.value = false;
     });
 };
 const searchUser = () => {
@@ -60,7 +64,25 @@ await fetchUsers();
       </v-alert>
       <div v-if="isCardView">
         <!-- Card View -->
-        <v-row align="center" dense>
+        <div class="svg-loader" v-if="isDataLoading">
+          <svg
+            class="spinner"
+            width="50px"
+            height="50px"
+            viewBox="0 0 50 50"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              class="path"
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke-width="5"
+            ></circle>
+          </svg>
+        </div>
+        <v-row align="center" dense v-else>
           <v-col cols="12" md="4" v-for="(user, index) in searchedUserList">
             <v-card
               class="mx-auto"
@@ -92,8 +114,26 @@ await fetchUsers();
       </div>
 
       <div v-else>
+        <div class="svg-loader" v-if="isDataLoading">
+          <svg
+            class="spinner"
+            width="50px"
+            height="50px"
+            viewBox="0 0 50 50"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              class="path"
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke-width="5"
+            ></circle>
+          </svg>
+        </div>
         <!-- List View -->
-        <v-list>
+        <v-list v-else>
           <v-list-item
             v-for="(user, index) in searchedUserList"
             :key="user.id"
