@@ -6,6 +6,7 @@ const isDescriptionModalOpen = ref(false);
 const dialogTab = ref("contact");
 const isCardView = ref(true);
 const dialogIndex = ref(null);
+const error = ref(null);
 const showDescriptionDialog = (index) => {
   dialogIndex.value = index;
   isDescriptionModalOpen.value = true;
@@ -13,11 +14,16 @@ const showDescriptionDialog = (index) => {
 const searchedUserList = ref(null);
 const usersList = ref([]);
 const fetchUsers = async () => {
-  await api.get("/users").then((res) => {
-    console.log(res.data);
-    usersList.value = res.data;
-    searchedUserList.value = usersList.value;
-  });
+  await api
+    .get("/users")
+    .then((res) => {
+      console.log(res.data);
+      usersList.value = res.data;
+      searchedUserList.value = usersList.value;
+    })
+    .catch((err) => {
+      error.value = err.data.message;
+    });
 };
 const searchUser = () => {
   searchedUserList.value = usersList.value.filter((user) =>
@@ -49,6 +55,9 @@ await fetchUsers();
         :label="isCardView ? 'Card View' : 'List View'"
       ></v-switch>
       <!-- Conditional Rendering for Card or List -->
+      <v-alert v-if="error" type="error" dismissible>
+        {{ error }}
+      </v-alert>
       <div v-if="isCardView">
         <!-- Card View -->
         <v-row align="center" dense>
