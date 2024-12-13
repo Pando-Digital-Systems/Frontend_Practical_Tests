@@ -6,7 +6,9 @@
 
 // Plugins
 import { registerPlugins } from '@/plugins'
+import axios from 'axios';
 
+console.log('Axios is working:', axios);
 // Components
 import App from './App.vue'
 
