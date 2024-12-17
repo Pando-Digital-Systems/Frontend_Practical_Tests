@@ -11,16 +11,22 @@ import { setupLayouts } from 'virtual:generated-layouts'
 const routes = [
   {
     path: '/',
-    redirect: '/dashboard'
-  },  
+    redirect: '/userDashboard'
+  },
+  
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('../pages/dashboard.vue'),   
+    path: '/userDashboard',
+    name: 'UserDashboard',
+    component: () => import('../pages/UserDashboard.vue'),   
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../components/Login.vue'),   
     meta: { 
       requiresAuth: true
     }
-  },
+  }, 
 ]
 
 const router = createRouter({
